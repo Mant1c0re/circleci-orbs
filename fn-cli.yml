@@ -81,7 +81,7 @@ commands:
             fn create context \
             << parameters.profile-name >> \
             --provider oracle && \
-	    fn set context \
+            fn set context \
             << parameters.profile-name >>
 
       - run:
