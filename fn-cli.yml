@@ -80,7 +80,9 @@ commands:
           command: |
             fn create context \
             << parameters.profile-name >> \
-            --provider oracle
+            --provider oracle && \
+	    fn set context \
+            << parameters.profile-name >>
 
       - run:
           name: Configure registry
