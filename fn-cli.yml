@@ -129,12 +129,12 @@ commands:
       - run:
           name: Write private key to disk
           command: |
-            echo  << parameters.key-pem >> > ${CIRCLE_WORKING_DIRECTORY}/oci_api_key.pem
+            echo  << parameters.key-pem >> > /tmp/oci_api_key.pem
 
       - run:
           name: Configure key-file
           command: |
-            fn update context oracle.key-file ${CIRCLE_WORKING_DIRECTORY}/oci_api_key.pem
+            fn update context oracle.key-file /tmp/oci_api_key.pem
 
 executors:
   default:
