@@ -22,7 +22,7 @@ commands:
       profile-name:
         description: Profile name to be configured.
         type: string
-        default: "default"
+        default: "oracle"
 
       registry:
         description: |
