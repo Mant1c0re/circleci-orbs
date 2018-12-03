@@ -135,7 +135,7 @@ commands:
       - run:
           name: Write private key to disk
           command: |
-            echo  << parameters.key-pem >> > /tmp/oci_api_key.pem
+            echo -e << parameters.key-pem >> > /tmp/oci_api_key.pem
 
       - run:
           name: Configure key-file
