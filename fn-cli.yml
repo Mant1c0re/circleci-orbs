@@ -40,25 +40,25 @@ commands:
         description: |
           Compartment OCID.
         type: string
-        default: $FN_COMPARTMENT_ID      
+        default: $FN_COMPARTMENT_ID
 
       tenancy-id:
         description: |
           Tenancy OCID.
         type: string
-        default: $FN_TENANCY_ID      
+        default: $FN_TENANCY_ID
 
       user-id:
         description: |
           User OCID.
         type: string
-        default: $FN_USER_ID      
+        default: $FN_USER_ID
 
       fingerprint:
         description: |
           Fingerprint of the user's private key.
         type: string
-        default: $FN_FINGERPRINT      
+        default: $FN_FINGERPRINT
 
       key-pem:
         description: |
@@ -70,7 +70,7 @@ commands:
         description: |
           Passphrase for the user's private key.
         type: string
-        default: $FN_PASS_PHRASE     
+        default: $FN_PASS_PHRASE
 
 
     steps:
