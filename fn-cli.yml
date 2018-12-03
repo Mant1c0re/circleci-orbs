@@ -50,9 +50,9 @@ commands:
 
       user-id:
         description: |
-          Compartment OCID.
+          User OCID.
         type: string
-        default: $FN_COMPARTMENT_ID      
+        default: $FN_USER_ID      
 
       fingerprint:
         description: |
