@@ -1,0 +1,143 @@
+version: 2.1
+
+description: |
+  Install and configure the fn CLI command-line interface
+
+commands:
+  install:
+    steps:
+      - run:
+          name: "Install `circleci` CLI"
+          command: |
+            curl -fSl "https://raw.githubusercontent.com/fnproject/cli/master/install" -o cli-install.sh
+            sh cli-install.sh
+            echo "Print the circleci version"
+            fn version
+
+  configure:
+    description: |
+      Configure and store fn CLI credentials
+
+    parameters:
+      profile-name:
+        description: Profile name to be configured.
+        type: string
+        default: "default"
+
+      registry:
+        description: |
+          Registry e.g. phx.ocir.io/acme/foo
+        type: string
+        default: $FN_REGISTRY
+
+      api-url:
+        description: |
+          Target API URL e.g. https://functions.us-phoenix-1.oraclecloud.com
+        type: string
+        default: $FN_API_URL
+
+      compartment-id:
+        description: |
+          Compartment OCID.
+        type: string
+        default: $FN_COMPARTMENT_ID      
+
+      tenancy-id:
+        description: |
+          Tenancy OCID.
+        type: string
+        default: $FN_TENANCY_ID      
+
+      user-id:
+        description: |
+          Compartment OCID.
+        type: string
+        default: $FN_COMPARTMENT_ID      
+
+      fingerprint:
+        description: |
+          Fingerprint of the user's private key.
+        type: string
+        default: $FN_FINGERPRINT      
+
+      key-pem:
+        description: |
+          User's private key in pem format.
+        type: string
+        default: $FN_KEY_PEM
+
+      pass-phrase:
+        description: |
+          Passphrase for the user's private key.
+        type: string
+        default: $FN_PASS_PHRASE     
+
+
+    steps:
+
+      - run:
+          name: Create CLI context
+          command: |
+            fn create context \
+            << parameters.profile-name >> \
+            --provider oracle
+
+      - run:
+          name: Configure registry
+          command: |
+            fn update context registry \
+            << parameters.registry >>
+
+      - run:
+          name: Configure API URL
+          command: |
+            fn update context api-url \
+            << parameters.api-url >>
+
+      - run:
+          name: Configure compartment ID
+          command: |
+            fn update context oracle.compartment-id \
+            << parameters.compartment-id >> \
+
+      - run:
+          name: Configure tenancy ID
+          command: |
+            fn update context oracle.tenancy-id \
+            << parameters.tenancy-id >> \
+
+      - run:
+          name: Configure user ID
+          command: |
+            fn update context oracle.user-id \
+            << parameters.user-id >> \
+
+      - run:
+          name: Configure fingerprint
+          command: |
+            fn update context oracle.fingerprint \
+            << parameters.fingerprint >> \
+
+      - run:
+          name: Configure pass-phrase
+          command: |
+            fn update context oracle.pass-phrase \
+            << parameters.pass-phrase >> \
+
+      - run:
+          name: Write private key to disk
+          command: |
+            mkdir ${CIRCLE_WORKING_DIRECTORY}/.oci && \\
+            echo  << parameters.key-pem >> > ${CIRCLE_WORKING_DIRECTORY}/.oci/oci_api_key.pem
+
+      - run:
+          name: Configure key-file
+          command: |
+            fn update context oracle.key-file ${CIRCLE_WORKING_DIRECTORY}/.oci/oci_api_key.pem
+
+executors:
+  default:
+    description:
+      The image to use for installing/configuring the fn CLI.
+    docker:
+      - image: circleci/python:3.6
