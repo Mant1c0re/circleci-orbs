@@ -20,6 +20,19 @@ commands:
           name: "List Apps"
           command: fn list apps
 
+  ensure-app:
+    parameters:
+      appname:
+        description: "app name"
+        type: string
+    steps:
+       - run:
+           name: "Get App"
+           command: export CHAR=fn get app << parameters.appname >> | xargs echo | cut -c-1
+       - run: echo $CHAR
+       - run: if [[ $CHAR != "{" ]] ; then fn create app << parameters.appname >> --annotation oracle.com/oci/subnetIds="[\"$FN_APP_SUBNET_ID\"]"; fi
+
+
   configure:
     description: |
       Configure and store fn CLI credentials
