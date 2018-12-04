@@ -9,8 +9,8 @@ commands:
       - run:
           name: "Install `fn` CLI"
           command: |
-            curl -fSl "https://raw.githubusercontent.com/fnproject/cli/master/install" -o cli-install.sh
-            sh cli-install.sh
+            curl -fSl "https://raw.githubusercontent.com/fnproject/cli/master/install" -o /tmp/fn-install.sh
+            sh /tmp/fn-install.sh
             echo "Print the fn version"
             fn version
 
