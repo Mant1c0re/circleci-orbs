@@ -7,11 +7,11 @@ commands:
   install:
     steps:
       - run:
-          name: "Install `circleci` CLI"
+          name: "Install `fn` CLI"
           command: |
             curl -fSl "https://raw.githubusercontent.com/fnproject/cli/master/install" -o cli-install.sh
             sh cli-install.sh
-            echo "Print the circleci version"
+            echo "Print the fn version"
             fn version
 
   list-apps:
